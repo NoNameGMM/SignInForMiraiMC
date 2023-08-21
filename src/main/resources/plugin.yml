@@ -1,0 +1,8 @@
+name: SignInForMiraiMC
+version: '${project.version}'
+main: nonamegmm.signinformiraimc.SignInForMiraiMC
+api-version: '1.16'
+authors: [NoNameGMM]
+depend:
+  - MiraiMC
+  - HyperCurrencies
