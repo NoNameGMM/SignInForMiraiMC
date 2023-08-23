@@ -43,7 +43,7 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
         this.saveConfig();
         System.out.println("[SignInForMiraiMC] 插件已启动！");
         System.out.println("[SignInForMiraiMC] 作者：NoNameGMM");
-        System.out.println("[SignInForMiraiMC] 作者Github：");
+        System.out.println("[SignInForMiraiMC] 插件Github：https://github.com/NoNameGMM/SignInForMiraiMC/");
         System.out.println("[SignInForMiraiMC] 正在获取config.yml！");
         long groupid = getConfig().getLong("QQ群号");
         System.out.println("[SignInForMiraiMC] 使用群号为：" + groupid);
