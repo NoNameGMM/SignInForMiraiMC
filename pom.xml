@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>NoNameGMM</groupId>
+    <groupId>me.NoNameGMM</groupId>
     <artifactId>SignInForMiraiMC</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -42,7 +42,7 @@
                             <relocations>
                             <relocation>
                             <pattern>org.bstats</pattern>
-                                <shadedPattern>nonamegmm.signinformiraimc</shadedPattern>
+                                <shadedPattern>me.nonamegmm.signinformiraimc</shadedPattern>
                             </relocation>
                             </relocations>
                         </configuration>
@@ -72,7 +72,6 @@
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -88,15 +87,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Sv3ks</groupId>
-            <artifactId>HyperCurrencies</artifactId>
-            <version>1.7-dev2</version>
-        </dependency>
-        <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.minecraft.economy</groupId>
+            <artifactId>UltiEconomy</artifactId>
+            <version>2.7.4</version>
         </dependency>
     </dependencies>
 </project>
