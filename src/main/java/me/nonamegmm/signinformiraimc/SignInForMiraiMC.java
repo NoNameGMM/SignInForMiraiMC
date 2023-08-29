@@ -1,5 +1,7 @@
 package me.nonamegmm.signinformiraimc;
 
+import com.minecraft.economy.apis.UltiEconomy;
+import com.minecraft.economy.apis.UltiEconomyAPI;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
 import org.bukkit.Bukkit;
@@ -7,8 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.minecraft.economy.apis.UltiEconomyAPI;
-import com.minecraft.economy.apis.UltiEconomy;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,7 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
         }
         return false;
     }
+
     @Override // 加载插件
     public void onLoad() {
         System.out.println("[SignInForMiraiMC] 插件正在加载！");
@@ -81,7 +82,6 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
             long id = e.getGroupID();
             String nickname = e.getSenderName();
             if (id == groupid) {
-
                 if (datafile.contains(nickname)) {
                     MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("@" + nickname + " 你已经签到过了喔");
                 }
@@ -91,11 +91,10 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
                     if(connectfile.contains(nickname)) {
                         double number = (int) (Math.random() * 50) + 1;
                         MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("恭喜 @" + nickname + "\n" + "获得了" + number + "块钱");
-                        String economyuser = (String) connectfile.get(nickname);
-                        System.out.println(economyuser + " " + number);
-                        economy.addTo(economyuser, number);
                         datafile.set(nickname, nickname);
                         datafile.save(file);
+                        String economyuser = (String) connectfile.get(nickname);
+                        economy.addTo(economyuser, number);
                     }
                     else {
                         MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("你还没有绑定游戏用户名呢" + "\n" + "请输入“绑定(您的游戏名)“绑定账号");
@@ -110,6 +109,7 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
         if (e.getMessage().contains("绑定")) {
             String connect = e.getMessage();
             connect = connect.replace("绑定","");
+            connect = connect.replaceAll(" ","");
             if(connect.isEmpty()) {
                 MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("请正确输入您的游戏名喔");
             }
@@ -128,23 +128,15 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
         if (file.exists()) {
             // 删除文件
             if (file.delete()) {
-                System.out.println("文件删除成功！");
                 if (file.createNewFile()) {
-                    System.out.println("文件已创建");
-                    SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     Date date = new Date(System.currentTimeMillis());
                     String datenow = formatter.format(date);
-                    File datafile = new File(this.getDataFolder(), "data.yml");
-                    YamlConfiguration data = YamlConfiguration.loadConfiguration(datafile);
+                    YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
                     data.set("time", datenow);
-                } else {
-                    System.out.println("文件已存在");
+                    data.save(file);
                 }
-            } else {
-                System.out.println("文件删除失败。");
             }
-        } else {
-            System.out.println("文件不存在。");
         }
     }
     @Override
