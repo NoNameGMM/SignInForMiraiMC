@@ -148,11 +148,7 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
                     moneyshow[i] = names[i] + " " + money[i] + "个金币";
                     bankshow[i] = names[i] + " " + bank[i] + "个金币";
                 }
-                for(int i = 0;i < 5;i++)
-                {
-                    System.out.println(moneyshow[i]);
-                }
-                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("金币排行榜" + "\n" + "#现金：" + "\n" + "1." + moneyshow[1]  + "\n" + "2." + moneyshow[2]  + "\n" + "3." + moneyshow[3]  + "\n" + "4." + moneyshow[4]  + "\n" + "5." + moneyshow[5] + "\n" + "#存款：" + "\n" + "1." + bankshow[1]  + "\n" + "2." + bankshow[2]  + "\n" + "3." + bankshow[3]  + "\n" + "4." + bankshow[4]  + "\n" + "5." + bankshow[5]);
+                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("金币排行榜" + "\n" + "#现金：" + "\n" + "1." + moneyshow[0]  + "\n" + "2." + moneyshow[1]  + "\n" + "3." + moneyshow[2]  + "\n" + "4." + moneyshow[3]  + "\n" + "5." + moneyshow[4] + "\n" + "#存款：" + "\n" + "1." + bankshow[0]  + "\n" + "2." + bankshow[1]  + "\n" + "3." + bankshow[2]  + "\n" + "4." + bankshow[3]  + "\n" + "5." + bankshow[4]);
             }
         }
     }
