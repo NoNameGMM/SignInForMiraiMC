@@ -5,6 +5,7 @@ import com.minecraft.economy.apis.UltiEconomyAPI;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -97,29 +98,86 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
                         economy.addTo(economyuser, number);
                     }
                     else {
-                        MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("你还没有绑定游戏用户名呢" + "\n" + "请输入“绑定(您的游戏名)“绑定账号");
+                        MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("你还没有绑定游戏用户名呢" + "\n" + "请输入“/绑定(您的游戏名)“绑定账号");
                     }
                 }
+            }
+        }
+    }
+    public static void bubbleSort(double[] arr,double[] arrs,String[] arrss) {
+        int n = arr.length;
+        for (int i = 0; i < n; i++) {
+            // 每轮遍历将最大的数移到末尾
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] < arr[j+1]) {
+                    double temp = arr[j];
+                    double temps = arrs[j];
+                    String tempss = arrss[j];
+                    arr[j] = arr[j+1];
+                    arrs[j] = arrs[j+1];
+                    arrss[j] = arrss[j+1];
+                    arr[j+1] = temp;
+                    arrs[j+1] = temps;
+                    arrss[j+1] = tempss;
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void onChart(MiraiGroupMessageEvent e) {
+        if (e.getMessage().equals("金币排行榜")) {
+            long groupid = getConfig().getLong("QQ群号");
+            long id = e.getGroupID();
+            if (id == groupid) {
+                OfflinePlayer[] players = Bukkit.getOfflinePlayers();
+                String[] names = new String[players.length];
+                double[] money = new double[players.length];
+                double[] bank = new double[players.length];
+                for(int i = 0; i < players.length; i++) {
+                    names[i] = players[i].getName();
+                }
+                UltiEconomyAPI economy = SignInForMiraiMC.getEconomy();
+                for(int i = 0;i < players.length; i++) {
+                    money[i] = economy.checkMoney(names[i]);
+                    bank[i] = economy.checkBank(names[i]);
+                }
+                bubbleSort(money,bank,names);
+                String[] moneyshow = new String[100000];
+                String[] bankshow = new String[100000];
+                for(int i = 0;i < 5; i++) {
+                    moneyshow[i] = names[i] + " " + money[i] + "个金币";
+                    bankshow[i] = names[i] + " " + bank[i] + "个金币";
+                }
+                for(int i = 0;i < 5;i++)
+                {
+                    System.out.println(moneyshow[i]);
+                }
+                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("金币排行榜" + "\n" + "#现金：" + "\n" + "1." + moneyshow[1]  + "\n" + "2." + moneyshow[2]  + "\n" + "3." + moneyshow[3]  + "\n" + "4." + moneyshow[4]  + "\n" + "5." + moneyshow[5] + "\n" + "#存款：" + "\n" + "1." + bankshow[1]  + "\n" + "2." + bankshow[2]  + "\n" + "3." + bankshow[3]  + "\n" + "4." + bankshow[4]  + "\n" + "5." + bankshow[5]);
             }
         }
     }
 
     @EventHandler
     public void onConnect(MiraiGroupMessageEvent e) throws IOException {
-        if (e.getMessage().contains("绑定")) {
-            String connect = e.getMessage();
-            connect = connect.replace("绑定","");
-            connect = connect.replaceAll(" ","");
-            if(connect.isEmpty()) {
-                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("请正确输入您的游戏名喔");
+        if (e.getMessage().contains("/绑定")) {
+            File file = new File(this.getDataFolder(), "connect.yml");
+            YamlConfiguration connectfile = YamlConfiguration.loadConfiguration(file);
+            if(connectfile.contains(e.getSenderName())) {
+                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("你已经绑定过了喔");
             }
             else {
-                File file = new File(this.getDataFolder(), "connect.yml");
-                YamlConfiguration connectfile = YamlConfiguration.loadConfiguration(file);
-                connectfile.set(e.getSenderName(), connect);
-                connectfile.save(file);
-                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("绑定成功");
-                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("您的名字是 " + connect);
+                String connect = e.getMessage();
+                connect = connect.replace("/绑定","");
+                connect = connect.replaceAll(" ","");
+                if(connect.isEmpty()) {
+                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("请正确输入您的游戏名喔");
+                }
+                else {
+                    connectfile.set(e.getSenderName(), connect);
+                    connectfile.save(file);
+                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("绑定成功");
+                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("您的名字是 " + connect);
+                }
             }
         }
     }
