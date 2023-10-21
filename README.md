@@ -4,7 +4,7 @@
 
 # 介绍
 本插件适用于 1.17.X-1.6 的 Bukkit系服务端（Bukkit,Spigot,Paper)  
-MCBBS地址:https://www.mcbbs.net/thread-1465963-1-1.html
+MCBBS地址:https://www.mcbbs.net/thread-1465963-1-1.html  
 需要的前置插件有：Vault,UltiEconomy,MiraiMC  
 UltiEconomy:https://github.com/wisdommen/UltiEconomy  
 Vault:https://www.spigotmc.org/resources/vault.34315/  
