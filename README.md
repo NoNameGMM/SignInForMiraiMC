@@ -1,9 +1,9 @@
 # SignInForMiraiMC
 这是一个基于MiraiMC的签到插件  
-本项目使用GNU AGPL3.0协议开源
+本项目使用GPL3.0协议开源
 
 # 介绍
-本插件适用于 1.17.X-1.6 的 Bukkit系服务端（Bukkit,Spigot,Paper)  
+本插件适用于 1.20.4-1.8 的 Bukkit系服务端（Bukkit,Spigot,Paper)  
 MCBBS地址:https://www.mcbbs.net/thread-1465963-1-1.html  
 需要的前置插件有：Vault,UltiEconomy,MiraiMC  
 UltiEconomy:https://github.com/wisdommen/UltiEconomy  
