@@ -196,7 +196,7 @@ public final class SignInForMiraiMC extends JavaPlugin implements Listener{
             File file = new File(this.getDataFolder(), "connect.yml");
             YamlConfiguration connectfile = YamlConfiguration.loadConfiguration(file);
             String connect = e.getMessage();
-            connect = connect.replace("/绑定更换","");
+            connect = connect.replace("/更换绑定","");
             connect = connect.replaceAll(" ","");
             if(connect.isEmpty()) {
                 MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("请正确输入您的游戏名喔");
